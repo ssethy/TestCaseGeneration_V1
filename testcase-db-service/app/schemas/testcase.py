@@ -1,30 +1,22 @@
 import logging
-from uuid import UUID
-from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Dict
 from datetime import datetime
+from uuid import UUID
 
 logger = logging.getLogger(__name__)
-
+logger.setLevel(logging.INFO)
 
 class TestCaseBase(BaseModel):
-    version: str
-    content: dict
-
+    requirement_id: UUID = Field(..., example="3fa85f64-5717-4562-b3fc-2c963f66afa6")
+    version: str = Field(..., example="v1")
+    content: Dict = Field(..., example={"steps": ["step1", "step2"]})
 
 class TestCaseCreate(TestCaseBase):
-    requirement_id: UUID
+    pass
 
-
-class TestCaseInDB(TestCaseBase):
-    testcase_id: UUID
-    requirement_id: UUID
-    created_at: datetime
-    updated_at: Optional[datetime]
+class TestCaseOut(TestCaseBase):
+    testcase_id: UUID = Field(..., example="3fa85f64-5717-4562-b3fc-2c963f66afa6")
 
     class Config:
         orm_mode = True
-
-
-class TestCaseList(BaseModel):
-    testcases: List[TestCaseInDB]

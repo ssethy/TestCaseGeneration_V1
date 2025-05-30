@@ -1,26 +1,15 @@
-import logging
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-import os
+from app.models import Base, RequirementLabel, Requirement, TestCase
 
-# ✅ Initialize logger
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
-# ✅ Use environment variable or default to local sqlite for development
-DATABASE_URL = os.getenv("DB_URL", "sqlite+aiosqlite:///./test.db")
+DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
 engine = create_async_engine(DATABASE_URL, echo=False)
-AsyncSessionLocal = sessionmaker(
-    autocommit=False, autoflush=False, bind=engine, class_=AsyncSession
-)
-
-Base = declarative_base()
+AsyncSessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
 async def init_db():
     async with engine.begin() as conn:
-        logger.info("Creating all tables")
+        # Import models here to ensure metadata is populated correctly
         await conn.run_sync(Base.metadata.create_all)
 
 async def get_db():

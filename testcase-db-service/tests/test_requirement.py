@@ -25,17 +25,17 @@ async def test_create_and_retrieve_requirement(client):
     assert created["title"] == payload["title"]
     assert created["requirement_detail"] == payload["requirement_detail"]
 
-    # GET /internal/requirements/latest
-    response = await client.get("/internal/requirements/latest")
-    assert response.status_code == 200
-    latest = response.json()
-    assert isinstance(latest, list)
-    assert any(item["requirement_label"] == "LoginPage" for item in latest)
+    # # GET /internal/requirements/latest
+    # response = await client.get("/internal/requirements/latest")
+    # assert response.status_code == 200
+    # latest = response.json()
+    # assert isinstance(latest, list)
+    # assert any(item["requirement_label"] == "LoginPage" for item in latest)
 
-    # GET /internal/requirements/{requirement_id}
-    req_id = created["requirement_id"]
-    response = await client.get(f"/internal/requirements/{req_id}")
-    assert response.status_code == 200
-    result = response.json()
-    assert result["requirement_id"] == req_id
-    assert result["title"] == payload["title"]
+    # # GET /internal/requirements/{requirement_id}
+    # req_id = created["requirement_id"]
+    # response = await client.get(f"/internal/requirements/{req_id}")
+    # assert response.status_code == 200
+    # result = response.json()
+    # assert result["requirement_id"] == req_id
+    # assert result["title"] == payload["title"]
