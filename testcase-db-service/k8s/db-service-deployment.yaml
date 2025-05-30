@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testcase-db-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testcase-db-service
+  template:
+    metadata:
+      labels:
+        app: testcase-db-service
+    spec:
+      containers:
+      - name: db-service
+        image: testcase-db-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: "testcase_db"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_PASSWORD
+          value: "postgres"

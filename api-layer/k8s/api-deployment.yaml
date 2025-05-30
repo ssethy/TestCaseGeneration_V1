@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-layer
+  labels:
+    app: api-layer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-layer
+  template:
+    metadata:
+      labels:
+        app: api-layer
+    spec:
+      containers:
+        - name: api-layer
+          image: api-layer:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DOCUMENT_PREPROCESSOR_URL
+              value: "http://document-preprocessor-service:8000"
+            - name: REQUIREMENT_SERVICE_URL
+              value: "http://requirement-service:8000"

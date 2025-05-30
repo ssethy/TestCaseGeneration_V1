@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+alembic
+greenlet
+
+# Async support
+asyncpg
+aiosqlite
+
+# Testing
+pytest
+pytest-asyncio
+pytest-cov
+httpx

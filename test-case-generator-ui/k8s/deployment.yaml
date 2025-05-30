@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-case-ui
+  labels:
+    app: test-case-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-case-ui
+  template:
+    metadata:
+      labels:
+        app: test-case-ui
+    spec:
+      containers:
+        - name: test-case-ui
+          image: test-case-ui:latest
+          ports:
+            - containerPort: 80

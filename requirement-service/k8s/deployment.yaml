@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: requirement-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: requirement-service
+  template:
+    metadata:
+      labels:
+        app: requirement-service
+    spec:
+      containers:
+        - name: requirement-service
+          image: requirement-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://user:password@testcase-db-service:5432/testcase_db"
